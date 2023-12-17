@@ -5,10 +5,12 @@ const bcrypt = require("bcrypt");
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email);
 
   // check if user is available in DB
   const user = await User.findOne({ email });
-  if (!user) return res.status(400).json({ message: "Invalid email or password" });
+  if (!user)
+    return res.status(400).json({ message: "Invalid email or password" });
 
   // check if password is correct
   const isValidPassword = await bcrypt.compare(password, user.password);
@@ -34,6 +36,7 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   const { email, password, firstName, lastName, user_type } = req.body;
+  console.log(req.body);
   if (!email || !password || !firstName || !lastName) {
     return res.status(400).json({ message: "all fields are required" });
   }
@@ -41,7 +44,7 @@ const register = async (req, res) => {
   if (user_type == "admin" || user_type == "user") {
     const type = await Type.findOne({ name: user_type });
     const salt = await bcrypt.genSalt(10);
-    const hashedPass = await bcrypt.hash(password , salt)
+    const hashedPass = await bcrypt.hash(password, salt);
 
     try {
       const user = new User({
@@ -52,15 +55,15 @@ const register = async (req, res) => {
         user_type: type._id,
       });
 
-      await user.save();
+      user.save();
 
-      res.status(200).json({ user });
+      // login after register
+      login(req, res);
     } catch (e) {
       res.status(500).json({ error: e });
     }
-  }
-  else{
-    res.status(400).json({ message: 'Type Doesnt Exist!' });
+  } else {
+    res.status(400).json({ message: "Type Doesnt Exist!" });
   }
 };
 
