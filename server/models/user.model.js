@@ -25,6 +25,9 @@ const userSchema = new mongoose.Schema(
       ref: "Type",
       required: true,
     },
+    profile: {
+      type: String,
+    }
   },
   {
     timestamps: true,

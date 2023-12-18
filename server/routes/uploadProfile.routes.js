@@ -8,8 +8,8 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, "../images"));
   },
   filename: (req, file, cb) => {
-    // to remove : with -
-    cb(null,  new Date().toISOString().replace(/:/g,"-") + file.originalname );
+    // to replace : with -
+    cb(null,  Date.now() + file.originalname );
   },
 });
 

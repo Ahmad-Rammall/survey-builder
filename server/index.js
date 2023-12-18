@@ -22,10 +22,11 @@ app.use(morgan("common"));
 
 // Authentication Route
 const authRoutes = require("./routes/auth.routes");
+app.use("/auth", authRoutes);
 
 // Upload Pictures Route
-const uploadRoutes = require("./routes/uploadProfile.routes");
-app.use("/uploadProfile", uploadRoutes);
+// const uploadRoutes = require("./routes/uploadProfile.routes");
+// app.use("/uploadProfile", uploadRoutes);
 
 app.listen(process.env.PORT, () => {
   connectToMongoDB();
