@@ -26,7 +26,11 @@ app.use("/auth", authRoutes);
 
 // Survey Routes
 const surveyRoutes = require("./routes/survey.routes");
-app.use("/survey",authMiddleware, surveyRoutes)
+app.use("/survey",authMiddleware, surveyRoutes);
+
+// Response Routes
+const responseRoutes = require('./routes/response.routes')
+app.use("/response" , authMiddleware , responseRoutes);
 
 app.listen(process.env.PORT, () => {
   connectToMongoDB();

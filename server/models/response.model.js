@@ -17,7 +17,7 @@ const responseSchema = new mongoose.Schema({
         ref: "Survey.questions",
         required: true,
       },
-      choice: String, // for radio / mcq
+      choices: [{type: String}], // for radio / mcq
       text: String, // for text questions
     },
   ],
