@@ -10,7 +10,6 @@ function Register() {
   const [password, setPassword] = useState("");
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
-  const [type, setType] = useState("");
   const [image, setImage] = useState(null);
 
   const handleRegister = async () => {
@@ -19,7 +18,7 @@ function Register() {
     formData.append("password", password);
     formData.append("firstName", fname);
     formData.append("lastName", lname);
-    formData.append("user_type", type);
+    formData.append("user_type", "user");
     formData.append("image", image);
 
     const response = await sendRequest({
@@ -40,7 +39,7 @@ function Register() {
           type="file"
           accept="image/jpeg, image/png, image/jpg"
           placeholder=""
-          onChange={(e) => console.log(e.target.files[0])}
+          onChange={(e) => setImage(e.target.files[0])}
         />
         <label>First Name</label>
         <input
@@ -66,27 +65,6 @@ function Register() {
           placeholder=""
           onChange={(e) => setPassword(e.target.value)}
         />
-        <div className="type">
-          <label>Account Type : </label>
-          <label>
-            <input
-              type="radio"
-              name="userType"
-              value="admin"
-              onChange={(e) => setType(e.target.value)}
-            />
-            Admin
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="userType"
-              value="user"
-              onChange={(e) => setType(e.target.value)}
-            />
-            User
-          </label>
-        </div>
 
         <input type="button" value="Register" onClick={handleRegister} />
         <div>

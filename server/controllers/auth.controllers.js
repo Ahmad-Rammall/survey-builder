@@ -2,7 +2,6 @@ const User = require("../models/user.model");
 const Type = require("../models/type.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const path = require("path");
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -39,16 +38,15 @@ const register = async (req, res) => {
   const { email, password, firstName, lastName, user_type } = req.body;
   console.log(req.file);
   const profilePicturePath = req.file
-    ? req.file.path
-    : path.join(__dirname, "..", "images", "OIP.jpg");
+    ? req.file.filename
+    : "OIP.jpg";
 
   console.log(req.body);
   if (!email || !password || !firstName || !lastName) {
     return res.status(400).json({ message: "all fields are required" });
   }
 
-  if (user_type == "admin" || user_type == "user") {
-    const type = await Type.findOne({ name: user_type });
+    const type = await Type.findOne({ name: 'user' });
     const salt = await bcrypt.genSalt(10);
     const hashedPass = await bcrypt.hash(password, salt);
 
@@ -62,16 +60,14 @@ const register = async (req, res) => {
         profile: profilePicturePath,
       });
 
-      user.save();
+      await user.save();
 
       // login after register
       login(req, res);
     } catch (e) {
       return res.status(500).json({ error: e });
     }
-  } else {
-    res.status(400).json({ message: "Type Doesnt Exist!" });
-  }
+  
 };
 
 module.exports = {
