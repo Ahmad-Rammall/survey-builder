@@ -24,6 +24,10 @@ app.use(morgan("common"));
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
+// Survey Routes
+const surveyRoutes = require("./routes/survey.routes");
+app.use("/survey",authMiddleware, surveyRoutes)
+
 app.listen(process.env.PORT, () => {
   connectToMongoDB();
 });

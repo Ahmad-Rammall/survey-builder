@@ -35,7 +35,7 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
-  const { email, password, firstName, lastName, user_type } = req.body;
+  const { email, password, firstName, lastName } = req.body;
   console.log(req.file);
   const profilePicturePath = req.file
     ? req.file.filename
