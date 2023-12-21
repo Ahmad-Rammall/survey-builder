@@ -19,6 +19,8 @@ function Login() {
       route: "auth/login",
     });
     localStorage.setItem("token", response.data.token);
+    localStorage.setItem("role", response.data.type);
+
 
     if(response.data.type === "user"){
       navigate('../user')

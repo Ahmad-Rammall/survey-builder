@@ -1,6 +1,8 @@
 const Survey = require("../models/survey.model");
 
 const addSurvey = async (req, res) => {
+  if(req.type !== "admin") return res.status(401).json({message: "Unauthorized"})
+
   try {
     const survey = new Survey(req.body);
     await survey.save();
@@ -30,6 +32,8 @@ const getSurveyById = async (req, res) => {
 };
 
 const updateSurveyById = async (req, res) => {
+  if(req.type !== "admin") return res.status(401).json({message: "Unauthorized"})
+
   try {
     // runValidators to validate data before updating
     const survey = await Survey.findOneAndUpdate({ _id: req.params.id }, req.body, {
@@ -43,6 +47,8 @@ const updateSurveyById = async (req, res) => {
 };
 
 const deleteSurveyId = async (req, res) => {
+  if(req.type !== "admin") return res.status(401).json({message: "Unauthorized"})
+
   try {
     await Survey.findOneAndDelete({ _id: req.params.id });
     res.status(200).json({ message: "Survey Deleted" });

@@ -2,7 +2,7 @@ const Response = require("../models/response.model");
 const Survey = require("../models/survey.model");
 
 const addResponse = async (req, res) => {
-  // try {
+  try {
     const { surveyId, answers } = req.body;
     const userId = req.user._id;
     console.log(req.body);
@@ -37,12 +37,14 @@ const addResponse = async (req, res) => {
     const response = new Response({ surveyId, answers, userId });
     await response.save();
     res.status(200).json({ message: "Response Added", response });
-  // } catch (error) {
-  //   res.status(500).json({ error });
-  // }
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 };
 
 const getSurveyResponses = async (req, res) => {
+  if(req.type !== "admin") return res.status(401).json({message: "Unauthorized"})
+
   try {
     const surveyId = req.params.surveyId;
     const responses = await Response.find({ surveyId });
@@ -53,6 +55,7 @@ const getSurveyResponses = async (req, res) => {
 };
 
 const deleteResponse = async (req, res) => {
+
   try {
     const responseId = req.params.id;
     await Response.findOneAndDelete({ _id: responseId });
@@ -63,6 +66,7 @@ const deleteResponse = async (req, res) => {
 };
 
 const updateResponse = async (req, res) => {
+
   try {
     const responseId = req.params.id;
     const { newAnswers } = req.body;

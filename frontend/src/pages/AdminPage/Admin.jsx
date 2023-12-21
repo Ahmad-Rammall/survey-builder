@@ -1,11 +1,11 @@
-import React , {useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { sendRequest } from "../../request";
 import Survey from "../../components/survey/Survey";
 import AddSurvey from "../../components/AddSurveyModal/AddSurvey";
 
 function Admin() {
   const [surveys, setSurveys] = useState([]);
-  const [modalState , setModalState] = useState(false);
+  const [modalState, setModalState] = useState(false);
 
   const getAllSurveys = async () => {
     const response = await sendRequest({
@@ -15,19 +15,26 @@ function Admin() {
     setSurveys(response.data.surveys);
   };
 
-
   useEffect(() => {
-    getAllSurveys()
-  }, [])
+    getAllSurveys();
+  }, []);
   return (
-    <div>
-      <div className="surveys">
-        {surveys.map((s) => <Survey key={s._id} survey={s} admin />)}
-      </div>
+    <>
+      {localStorage.getItem("role") !== "admin" ? (
+        <div>Not Authorized</div>
+      ) : (
+        <div>
+          <div className="surveys">
+            {surveys.map((s) => (
+              <Survey key={s._id} survey={s} admin />
+            ))}
+          </div>
 
-      {modalState && <AddSurvey setModalState={setModalState} />}
-      <button onClick={() => setModalState(!modalState)}>Add Survey</button>
-    </div>
+          {modalState && <AddSurvey setModalState={setModalState} />}
+          <button onClick={() => setModalState(!modalState)}>Add Survey</button>
+        </div>
+      )}
+    </>
   );
 }
 
