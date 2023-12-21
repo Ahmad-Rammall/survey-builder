@@ -15,7 +15,6 @@ function Admin() {
     setSurveys(response.data.surveys);
   };
 
-  
 
   useEffect(() => {
     getAllSurveys()
@@ -23,7 +22,7 @@ function Admin() {
   return (
     <div>
       <div className="surveys">
-        {surveys.map((s) => <Survey key={s._id} survey={s}/>)}
+        {surveys.map((s) => <Survey key={s._id} survey={s} admin />)}
       </div>
 
       {modalState && <AddSurvey setModalState={setModalState} />}
