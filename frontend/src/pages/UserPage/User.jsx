@@ -11,8 +11,6 @@ function User() {
     setSurveys(response.data.surveys);
   };
 
-  
-
   useEffect(() => {
     getAllSurveys();
   }, []);

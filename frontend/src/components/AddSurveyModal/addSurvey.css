@@ -1,0 +1,30 @@
+.modal{
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+    top: 20vh;
+    left: 35vw;
+}
+
+.question{
+    margin: 10px;
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 40px;
+    width: 90%;
+}
+
+input{
+    height: 30px;
+    outline: none;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: rgb(73, 72, 72);
+    font-size: 18px;
+    margin: 10px;
+}
