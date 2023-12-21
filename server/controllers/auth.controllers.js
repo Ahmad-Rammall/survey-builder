@@ -27,9 +27,11 @@ const login = async (req, res) => {
     process.env.JWT_KEY,
     { expiresIn: "1h" }
   );
+  const user_type = await Type.findOne({ _id: userDetails.user_type })
 
   res.status(200).json({
     user: userDetails,
+    type: user_type.name,
     token,
   });
 };

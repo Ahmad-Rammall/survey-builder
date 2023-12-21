@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { sendRequest } from "../../request";
+import {useNavigate} from 'react-router-dom';
 
 import "./auth.css";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate()
 
   const handleLogin = async () => {
     const response = await sendRequest({
@@ -16,8 +18,16 @@ function Login() {
       },
       route: "auth/login",
     });
-    console.log(response.data.token);
     localStorage.setItem("token", response.data.token);
+
+    if(response.data.type === "user"){
+      navigate('../user')
+    }
+
+    if(response.data.type === "admin"){
+      navigate('../admin')
+    }
+    
   };
   return (
     <div>
