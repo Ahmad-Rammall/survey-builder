@@ -1,3 +1,9 @@
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .signup-box {
   width: 360px;
   height: 620px;
@@ -26,10 +32,13 @@ h4 {
 form {
   width: 300px;
   margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 form label {
-  display: flex;
   margin-top: 20px;
   font-size: 18px;
 }
@@ -43,15 +52,11 @@ form input {
   outline: none;
 }
 input[type="button"] {
-  width: 320px;
-  height: 35px;
+  width: 50%;
   margin-top: 20px;
   border: none;
   background-color: #49c1a2;
   color: white;
   font-size: 18px;
-}
-
-.type{
-    display: flex;
+  padding: 10px;
 }

@@ -2,9 +2,10 @@ const Response = require("../models/response.model");
 const Survey = require("../models/survey.model");
 
 const addResponse = async (req, res) => {
-  try {
+  // try {
     const { surveyId, answers } = req.body;
     const userId = req.user._id;
+    console.log(req.body);
 
     const survey = await Survey.findOne({ _id: surveyId });
 
@@ -16,6 +17,9 @@ const addResponse = async (req, res) => {
       );
 
       if (!question) res.status(404).json({ error: "Question Doesn't Exist" });
+
+      console.log(typeof(answer.choices));
+      console.log(survey);
 
       if (question.type === "radio" || question.type === "mcq") {
         const invalidChoices = answer.choices.filter(
@@ -33,9 +37,9 @@ const addResponse = async (req, res) => {
     const response = new Response({ surveyId, answers, userId });
     await response.save();
     res.status(200).json({ message: "Response Added", response });
-  } catch (error) {
-    res.status(500).json({ error });
-  }
+  // } catch (error) {
+  //   res.status(500).json({ error });
+  // }
 };
 
 const getSurveyResponses = async (req, res) => {
