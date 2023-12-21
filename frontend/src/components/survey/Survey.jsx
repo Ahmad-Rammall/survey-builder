@@ -5,7 +5,6 @@ import { sendRequest } from "../../request";
 
 function Survey({ survey, admin }) {
   const navigate = useNavigate();
-  console.log(`${survey._id}`);
 
   const deleteSurvey = async () => {
     const response = await sendRequest({

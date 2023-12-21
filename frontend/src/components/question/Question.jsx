@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from "react";
+import "./question.css";
 
-function Question({ question , setAnswers}) {
+function Question({ question, setAnswers }) {
   const [answer, setAnswer] = useState([]);
 
   const handleOptionChange = (option) => {
     // Toggle the selected state of the option
     if (answer.includes(option)) {
-        setAnswer(
-            answer.filter((selected) => selected !== option)
-      );
+      setAnswer(answer.filter((selected) => selected !== option));
     } else {
-        setAnswer([...answer, option]);
+      setAnswer([...answer, option]);
     }
   };
 
   useEffect(() => {
-    console.log(typeof(answer));
     setAnswers((prevAnswers) => {
       const existingAnswerIndex = prevAnswers.findIndex(
         (a) => a.questionId === question._id
@@ -37,42 +35,42 @@ function Question({ question , setAnswers}) {
   }, [answer, question._id, setAnswers]);
 
   return (
-    <div>
+    <div className="questions-container">
       <h3>{question.text}</h3>
       {question.type === "radio" && (
-        <>
+        <div className="question">
           {question.options.map((option, index) => (
-            <label key={index}>
-              {option}
+            <div key={index}>
+              <label>{option}</label>
               <input
                 type="radio"
                 name={question.text}
                 value={option}
                 onChange={(e) => setAnswer(e.target.value)}
               />
-            </label>
+            </div>
           ))}
-        </>
+        </div>
       )}
 
       {question.type === "mcq" && (
-        <>
+        <div className="question">
           {question.options.map((option, index) => (
-            <label key={index}>
-              {option}
+            <div key={index}>
+              <label>{option}</label>
               <input
                 type="checkbox"
                 name={question.text}
                 value={option}
                 onChange={() => handleOptionChange(option)}
               />
-            </label>
+            </div>
           ))}
-        </>
+        </div>
       )}
 
-      {question.type === "text" && (
-        <>
+      <div className="question">
+        {question.type === "text" && (
           <label>
             <input
               type="text"
@@ -80,8 +78,8 @@ function Question({ question , setAnswers}) {
               onChange={(e) => setAnswer(e.target.value)}
             />
           </label>
-        </>
-      )}
+        )}
+      </div>
     </div>
   );
 }
